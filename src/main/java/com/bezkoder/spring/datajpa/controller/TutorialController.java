@@ -30,7 +30,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "📚 教程管理", description = "教程相关的CRUD操作API")
 @ApiSupport(author = "BezKoder", order = 1)
-@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
 public class TutorialController {
@@ -95,7 +94,7 @@ public class TutorialController {
 			@RequestBody Tutorial tutorial) {
 		try {
 			Tutorial _tutorial = tutorialRepository
-					.save(new Tutorial(tutorial.getTitle(), tutorial.getDescription(), false));
+					.save(new Tutorial(tutorial.getTitle(), tutorial.getDescription(), tutorial.isPublished()));
 			return new ResponseEntity<>(_tutorial, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

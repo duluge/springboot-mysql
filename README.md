@@ -64,7 +64,7 @@ boolean existsByTitle(String title);
 # 使用Docker启动MySQL容器
 docker run -d \
   --name springboot-mysql \
-  -p 3307:3306 \
+  -p 3306:3306 \
   -e MYSQL_ROOT_PASSWORD=123456 \
   -e MYSQL_DATABASE=testdb \
   -v mysql_data:/var/lib/mysql \

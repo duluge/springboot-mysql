@@ -10,7 +10,7 @@ public class Tutorial {
 
 	@Schema(description = "教程ID", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Schema(description = "教程标题", example = "Spring Boot入门教程", required = true)
