@@ -1,0 +1,97 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Java 后端开发规约（定制版）
+
+## 一、整体规约
+
+- ✅ 遵循 @阿里巴巴 Java 开发手册（Alibaba Java Coding Guidelines）
+- ✅ 使用 IDEA 自带的格式化（快捷键：`Ctrl + Alt + L`）和美化功能
+- ✅ 制表符统一为 **4 个空格**
+- ✅ 单行换行限制建议设置为 **不低于 100 字符**
+- ✅ 命名规范：参数字段命名 **不包含业务域后缀**
+  - ❌ 错误示例：`private UserDTO userDTO;`
+  - ✅ 正确示例：`private UserDTO user;`
+- ✅ 遵守分层原则：
+  - ❌ 禁止 Controller 跃层调用 DAO 层
+  - ✅ Controller → Service → DAO（层级分明）
+- ✅ 工具类统一使用 @Hutool 工具包
+
+---
+
+## 二、HTTP 请求规范
+
+- ✅ 只允许使用 `GET` 和 `POST` 请求方式
+- ✅ 所有 URL 使用 **小写字母**，不含大写
+- ✅ URL 单词连接使用 **中划线（-）**
+  - ✅ 示例：`/log-center/list-page`（而不是 `/logCenter/listPage`）
+
+---
+
+## 三、View 层规范（Controller 接口层）
+
+- ✅ **请求参数类名后缀：`ParamVO`**
+- ✅ **返回结果类名后缀：`VO`**
+- ✅ 基础类型一律使用 **包装类型**（如 Integer / Boolean / String 等）
+- ✅ 除 Boolean 类型外，**返回值不要直接使用基础类型**
+  - ❌ 错误示例：
+    ```java
+    public String getUserName() {}
+    ```
+  - ✅ 正确示例：
+    ```java
+    public UserVO getUserName() {}
+    
+    public class UserVO {
+        private String userName;
+    }
+    ```
+
+---
+
+## 四、Service 层规范（业务逻辑层）
+
+- ✅ **请求参数类名后缀：`ParamDTO`**
+- ✅ **返回结果类名后缀：`DTO`**
+- ⚠️ 入参尽量 **不使用对象封装简单参数**
+  - ✅ 推荐示例：
+    ```java
+    public UserDTO getUserByIdAndName(String id, String name);
+    ```
+  - ❌ 不推荐写法：
+    ```java
+    public UserDTO getUserByParams(UserParamDTO param);
+    
+    public class UserParamDTO {
+        private String id;
+        private String name;
+    }
+    ```
+
+---
+
+## 五、DAO 层规范（数据访问层）
+
+- ✅ **请求参数类名后缀：`ParamDO`**
+- ✅ **返回结果类名后缀：`DO`**
+- ⚠️ 同样避免使用类封装简单查询条件
+  - ✅ 推荐示例：
+    ```java
+    public UserDO getUserByIdAndName(String id, String name);
+    ```
+  - ❌ 不推荐写法：
+    ```java
+    public UserDO getUserByParams(UserParamDO param);
+    
+    public class UserParamDO {
+        private String id;
+        private String name;
+    }
+    ```
+
+---
+
+> 📌 备注：所有 `DTO` / `VO` / `DO` 命名规范应严格遵循所在层级语义，避免混用，避免模糊定义，保持团队代码整洁、一致、易于协作与维护。
+
